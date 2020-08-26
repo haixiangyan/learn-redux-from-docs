@@ -1,0 +1,8 @@
+{
+  "name": "learn-redux",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:learn-redux/learn-redux.git",
+  "author": "Haixiang <haixiang6123@gmail.com>",
+  "license": "MIT"
+}
