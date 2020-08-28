@@ -1,11 +1,16 @@
 import {createStore} from "redux"
 
-const initState = {
+type TUser = {
+  email: string;
+  password: string;
+}
+
+const initState: TUser = {
   email: '',
   password: '',
 }
 
-const reducer = (state = initState, action) => {
+const reducer = (state = initState, action: any) => {
   switch (action.type) {
     case 'setEmail':
       return {
@@ -17,6 +22,8 @@ const reducer = (state = initState, action) => {
         ...state,
         password: action.password
       }
+    default:
+      return initState
   }
 }
 

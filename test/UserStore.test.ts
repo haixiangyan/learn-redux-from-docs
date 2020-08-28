@@ -1,8 +1,8 @@
-import store from '../src/UserStore';
+import store from '../src/User';
 
 jest.spyOn(global.console, 'log')
 
-describe('UserStore', function () {
+describe('User', function () {
   afterEach(() => {
     jest.clearAllMocks()
   })
