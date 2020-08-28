@@ -1,4 +1,4 @@
-import store from '../src/User';
+import store from '../src/UserStore';
 
 jest.spyOn(global.console, 'log')
 

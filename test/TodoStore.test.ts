@@ -1,6 +1,6 @@
-import store, {TTodo} from '../src/Todo'
+import store, {TTodo} from '../src/TodoStore'
 
-describe('Todo', () => {
+describe('TodoStore', () => {
   afterEach(() => {
     store.dispatch({type: '@@Init'})
   })
