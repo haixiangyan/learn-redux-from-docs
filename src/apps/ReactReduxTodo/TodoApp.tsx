@@ -32,6 +32,7 @@ const TodoApp: FC = () => {
       text: task,
       state: 'todo'
     }))
+    setTask('')
   }
 
   const onCheckTodo = (id: string) => {
