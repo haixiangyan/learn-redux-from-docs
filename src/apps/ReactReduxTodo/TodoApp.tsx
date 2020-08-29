@@ -6,7 +6,8 @@ import {useDispatch, useSelector} from "react-redux"
 import '../styles.scss'
 import {CloseOutlined} from "@ant-design/icons/lib"
 import classNames from "classnames"
-import {addTodo, fetchTodos, removeTodo, setFilter, toggleTodo} from "./actionCreators"
+import {addTodo, fetchTodos, removeTodo, toggleTodo} from "./actionCreators/todos"
+import {setFilter} from "./actionCreators/filter"
 
 const TodoApp: FC = () => {
   const dispatch = useDispatch()

@@ -1,5 +1,6 @@
 import {Dispatch} from "redux"
-import fetch from "../../api"
+import fetch from "../../../api"
+import {setLoading} from "./loading"
 
 const dbTodos: TTodo[] = [
   {
@@ -69,19 +70,3 @@ export const toggleTodo = (id: string) => async (dispatch: Dispatch) => {
 
   dispatch(setLoading({status: false, tip: ''}))
 }
-
-export const setFilter = (filter: TFilter) => async (dispatch: Dispatch) => {
-  dispatch(setLoading({status: true, tip: '加载中...'}))
-
-  dispatch({
-    type: 'setFilter',
-    payload: filter
-  })
-
-  dispatch(setLoading({status: false, tip: ''}))
-}
-
-export const setLoading = (loading: TLoading) => ({
-  type: 'setLoading',
-  payload: loading
-})
