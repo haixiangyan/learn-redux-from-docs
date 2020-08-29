@@ -4,11 +4,11 @@ import {Checkbox, Input, List, Radio, Spin} from "antd"
 import {useDispatch, useSelector} from "react-redux"
 import {CloseOutlined} from "@ant-design/icons/lib"
 import classNames from "classnames"
-import {addTodo, fetchTodos, removeTodo, toggleTodo} from "./todos/actionCreators"
-import {setFilter} from "./filter/actionCreators"
-import {selectFilteredTodos, selectTodoNeeded} from "./todos/selectors"
+import {addTodo, fetchTodos, removeTodo, toggleTodo} from "./store/todos/actionCreators"
+import {setFilter} from "./store/filter/actionCreators"
+import {selectFilteredTodos, selectTodoNeeded} from "./store/todos/selectors"
 import '../styles.scss'
-import {selectLoading} from "./loading/selectors"
+import {selectLoading} from "./store/loading/selectors"
 
 const TodoApp: FC = () => {
   const dispatch = useDispatch()
