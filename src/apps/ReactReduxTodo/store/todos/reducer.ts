@@ -1,4 +1,5 @@
 import {ADD_TODO, REMOVE_TODO, SET_TODOS, TOGGLE_TODO, UPDATE_TODO} from './actionTypes'
+import produce from 'immer'
 
 type THandlerMapper = {[key: string]: (loading: TTodo[], action: any) => TTodo[]}
 
@@ -10,22 +11,28 @@ const todosReducer = (todos: TTodo[] = initTodos, action: any) => {
       return [...action.payload]
     },
     [ADD_TODO]: (todos, action) => {
-      return [...todos, action.payload]
+      return produce(todos, draftTodos => {
+        draftTodos.push(action.payload)
+      })
     },
     [REMOVE_TODO]: (todos, action) => {
       return todos.filter(todo => todo.id !== action.payload)
     },
     [UPDATE_TODO]: (todos, action) => {
-      const {id, text} = action.payload
+      return produce(todos, draftTodos => {
+        const {id, text} = action.payload
 
-      return todos.map(todo => todo.id === id ? {...todo, text} : todo)
+        const draftTodo = draftTodos.find(t => t.id === id)
+
+        draftTodo!.text = text
+      })
     },
     [TOGGLE_TODO]: (todos, action) => {
-      return todos.map(todo =>
-        todo.id === action.payload
-          ? {...todo, state: todo.state === 'todo' ? 'done' : 'todo'}
-          : todo
-      )
+      return produce(todos, draftTodos => {
+        const draftTodo = draftTodos.find(t => t.id === action.payload)
+
+        draftTodo!.state = draftTodo!.state === 'todo' ? 'done' : 'todo'
+      })
     }
   }
 
