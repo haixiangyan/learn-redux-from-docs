@@ -1,6 +1,11 @@
-import {createStore} from "redux"
+import {applyMiddleware, createStore} from "redux"
 import reducer from "./reducer"
+import {composeWithDevTools} from "redux-devtools-extension/index"
 
-const store = createStore(reducer)
+const enhancer = process.env.NODE_ENV === 'development' ? composeWithDevTools(
+  applyMiddleware()
+) : undefined
+
+const store = createStore(reducer, enhancer)
 
 export default store

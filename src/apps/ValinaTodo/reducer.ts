@@ -32,8 +32,10 @@ const todosReducer = (todos: TTodo[] = initTodos, action: any) => {
           ? {...todo, state: todo.state === 'todo' ? 'done' : 'todo'}
           : todo
       )
-    default:
+    case 'reset':
       return initTodos
+    default:
+      return todos
   }
 }
 
@@ -41,8 +43,10 @@ const filterReducer = (filter: TFilter = initFilter, action: any) => {
   switch (action.type) {
     case 'setFilter':
       return action.payload
-    default:
+    case 'reset':
       return initFilter
+    default:
+      return filter
   }
 }
 

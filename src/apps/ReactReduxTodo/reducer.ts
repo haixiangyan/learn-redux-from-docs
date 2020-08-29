@@ -33,7 +33,7 @@ const todosReducer = (todos: TTodo[] = initTodos, action: any) => {
           : todo
       )
     default:
-      return initTodos
+      return todos
   }
 }
 
@@ -42,7 +42,7 @@ const filterReducer = (filter: TFilter = initFilter, action: any) => {
     case 'setFilter':
       return action.payload
     default:
-      return initFilter
+      return filter
   }
 }
 

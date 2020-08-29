@@ -5,7 +5,7 @@ jest.spyOn(global.console, 'log')
 describe('TodoStore', () => {
   afterEach(() => {
     jest.clearAllMocks()
-    store.dispatch({type: '@@Init'})
+    store.dispatch({type: 'reset'})
   })
 
   describe('subscribe', () => {
