@@ -98,4 +98,4 @@ const TodoApp: FC = () => {
   )
 }
 
-export default TodoApp
+export default React.memo(TodoApp)
