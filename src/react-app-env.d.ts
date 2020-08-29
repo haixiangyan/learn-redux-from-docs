@@ -6,6 +6,13 @@ type TTodo = {
   state: TFilter;
 }
 
+type TTodoEntities = {[key: string]: TTodo};
+
+type TTodoStore = {
+  ids: string[];
+  entities: TTodoEntities;
+}
+
 type TFilter = 'done' | 'todo' | 'all'
 
 type TLoading = {
@@ -14,7 +21,7 @@ type TLoading = {
 }
 
 type TStore = {
-  todos: TTodo[];
+  todos: TTodoStore;
   filter: TFilter;
   loading: TLoading;
 }

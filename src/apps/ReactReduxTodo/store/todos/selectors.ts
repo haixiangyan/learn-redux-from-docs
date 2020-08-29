@@ -1,10 +1,12 @@
-export const selectFilteredTodos = (state: TStore) => {
+export const selectFilteredTodos = (state: TStore): TTodo[] => {
+  const todos = Object.values(state.todos.entities)
+
   if (state.filter === 'all') {
-    return state.todos
+    return todos
   }
 
-  return state.todos.filter(todo => todo.state === state.filter)
+  return todos.filter(todo => todo.state === state.filter)
 }
-export const selectTodoNeeded = (state: TStore) => {
-  return state.todos.filter(todo => todo.state === 'todo').length
+export const selectTodoNeeded = (state: TStore): number => {
+  return Object.values(state.todos.entities).filter(todo => todo.state === 'todo').length
 }

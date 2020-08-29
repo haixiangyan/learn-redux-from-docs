@@ -21,6 +21,36 @@ const dbTodos: TTodo[] = [
   }
 ]
 
+export type TSetTodosAction = {
+  type: SET_TODOS;
+  payload: TTodo[];
+}
+
+export type TAddTodoAction = {
+  type: ADD_TODO;
+  payload: TTodo;
+}
+
+export type TRemoveTodoAction = {
+  type: REMOVE_TODO;
+  payload: string;
+}
+
+export type TUpdateTodoAction = {
+  type: UPDATE_TODO;
+  payload: {
+    id: string;
+    text: string
+  }
+}
+
+export type TToggleTodoAction = {
+  type: TOGGLE_TODO;
+  payload: string;
+}
+
+export type TTodoAction = TSetTodosAction | TAddTodoAction | TRemoveTodoAction | TUpdateTodoAction | TToggleTodoAction
+
 export const fetchTodos = () => async (dispatch: Dispatch) => {
   dispatch(setLoading({status: true, tip: '加载中...'}))
 
