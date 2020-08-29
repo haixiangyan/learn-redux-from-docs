@@ -1,6 +1,7 @@
 import {Dispatch} from "redux"
 import fetch from "../../../api"
 import {setLoading} from "./loading"
+import {ADD_TODO, REMOVE_TODO, SET_TODOS, TOGGLE_TODO} from "../actionTypes/todos"
 
 const dbTodos: TTodo[] = [
   {
@@ -23,12 +24,9 @@ const dbTodos: TTodo[] = [
 export const fetchTodos = () => async (dispatch: Dispatch) => {
   dispatch(setLoading({status: true, tip: '加载中...'}))
 
-  const response: TTodo = await fetch('/addTodo', () => dbTodos)
+  const response: TTodo = await fetch('/fetchTodos', () => dbTodos)
 
-  dispatch({
-    type: 'setTodos',
-    payload: response
-  })
+  dispatch({ type: SET_TODOS, payload: response })
 
   dispatch(setLoading({status: false, tip: ''}))
 }
@@ -41,10 +39,7 @@ export const addTodo = (newTodo: Partial<TTodo>) => async (dispatch: Dispatch) =
     ...newTodo
   }))
 
-  dispatch({
-    type: 'addTodo',
-    payload: response
-  })
+  dispatch({ type: ADD_TODO, payload: response })
 
   dispatch(setLoading({status: false, tip: ''}))
 }
@@ -52,10 +47,9 @@ export const addTodo = (newTodo: Partial<TTodo>) => async (dispatch: Dispatch) =
 export const removeTodo = (id: string) => async (dispatch: Dispatch) => {
   dispatch(setLoading({status: true, tip: '移除中...'}))
 
-  dispatch({
-    type: 'removeTodo',
-    payload: id
-  })
+  const response = await fetch('/removeTodo', () => id)
+
+  dispatch({ type: REMOVE_TODO, payload: response })
 
   dispatch(setLoading({status: false, tip: ''}))
 }
@@ -63,10 +57,9 @@ export const removeTodo = (id: string) => async (dispatch: Dispatch) => {
 export const toggleTodo = (id: string) => async (dispatch: Dispatch) => {
   dispatch(setLoading({status: true, tip: '修改状态中...'}))
 
-  dispatch({
-    type: 'toggleTodo',
-    payload: id
-  })
+  const response = await fetch('/toggleTodo', () => id)
+
+  dispatch({ type: TOGGLE_TODO, payload: response })
 
   dispatch(setLoading({status: false, tip: ''}))
 }
