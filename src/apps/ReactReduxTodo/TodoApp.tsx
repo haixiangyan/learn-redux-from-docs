@@ -3,7 +3,7 @@ import {FC, useState} from "react"
 import {Checkbox, Input, List, Radio} from "antd"
 import {useDispatch, useSelector} from "react-redux"
 
-import './styles.scss'
+import '../styles.scss'
 import {CloseOutlined} from "@ant-design/icons/lib"
 import classNames from "classnames"
 import {addTodo, removeTodo, setFilter, toggleTodo} from "./actionCrators"
