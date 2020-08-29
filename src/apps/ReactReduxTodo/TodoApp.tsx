@@ -17,7 +17,7 @@ const TodoApp: FC = () => {
   const todoNeeded = useSelector<TStore, number>(selectTodoNeeded)
   const loading = useSelector<TStore, TLoading>(selectLoading)
 
-  const [task, setTask] = useState<string>('');
+  const [task, setTask] = useState<string>('')
 
   useEffect(() => {
     dispatch(fetchTodos())
@@ -46,7 +46,7 @@ const TodoApp: FC = () => {
   const footer = (
     <div className="footer">
       {todoNeeded > 0 &&
-        <span className="todo-needed">
+      <span className="todo-needed">
           还剩{todoNeeded}项 <span role="img" aria-label="Clap">🎉</span>
         </span>
       }
@@ -81,15 +81,15 @@ const TodoApp: FC = () => {
           dataSource={todos}
           renderItem={todo => (
             <List.Item className="todo-item">
-            <span className="todo-left">
-              <Checkbox checked={todo.state === 'done'} onChange={() => onCheckTodo(todo.id)}/>
-              <span className={classNames('todo-text', {'done': todo.state === 'done'})}>
-                {todo.text}
+              <span className="todo-left">
+                <Checkbox checked={todo.state === 'done'} onChange={() => onCheckTodo(todo.id)}/>
+                <span className={classNames('todo-text', {'done': todo.state === 'done'})}>
+                  {todo.text}
+                </span>
               </span>
-            </span>
               <span className="todo-right" onClick={() => onRemoveTodo(todo.id)}>
-              <CloseOutlined/>
-            </span>
+                <CloseOutlined/>
+              </span>
             </List.Item>
           )}
         />
