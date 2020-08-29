@@ -25,31 +25,26 @@ describe('TodoStore', () => {
         state: 'todo',
       }
 
-      store.dispatch({type: 'addTodo', newTodo})
+      store.dispatch({type: 'addTodo', payload: newTodo})
 
-      expect(store.getState().todos[0]).toEqual(newTodo)
+      const todos = store.getState().todos
+      expect(todos[todos.length - 1]).toEqual(newTodo)
     })
 
     it('可以移除一条 Todo', () => {
-      const index = 0
+      const id = '1'
 
-      store.dispatch({type: 'removeTodo', index})
-
-      expect(store.getState().todos[0]).not.toEqual({
-        id: '99',
-        text: '抽烟',
-        done: true
-      })
+      store.dispatch({type: 'removeTodo', payload: id})
 
       expect(store.getState().todos.find(todo => todo.text === '抽烟')).toBeUndefined()
     })
 
     it('可以改变 Todo 的状态', () => {
-      const index = 0
+      const id = '1'
 
-      store.dispatch({type: 'toggleTodo', index})
+      store.dispatch({type: 'toggleTodo', id})
 
-      expect(store.getState().todos[0].state).toBeFalsy()
+      expect(store.getState().todos[0].state).toEqual('done')
     })
   })
 
@@ -57,7 +52,7 @@ describe('TodoStore', () => {
     it('可以只选择已完成的 Todo', () => {
       const newFilter = 'done'
 
-      store.dispatch({type: 'setFilter', newFilter})
+      store.dispatch({type: 'setFilter', payload: newFilter})
 
       const {todos, filter} = store.getState()
       const filteredTodo = todos.filter(todo => todo.state === filter)

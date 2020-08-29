@@ -23,13 +23,13 @@ const initFilter: TFilter = 'all'
 const todosReducer = (todos: TTodo[] = initTodos, action: any) => {
   switch (action.type) {
     case 'addTodo':
-      return [action.payload, ...todos]
+      return [...todos, action.payload]
     case 'removeTodo':
       return todos.filter(todo => todo.id !== action.payload)
     case 'toggleTodo':
       return todos.map(todo =>
         todo.id === action.payload
-          ? {text: todo.text, done: !todo.state}
+          ? {...todo, state: todo.state === 'todo' ? 'done' : 'todo'}
           : todo
       )
     default:

@@ -20,16 +20,16 @@ const initTodos: TTodo[] = [
 
 const initFilter: TFilter = 'all'
 
-const todosReducer = (state: TTodo[] = initTodos, action: any) => {
+const todosReducer = (todos: TTodo[] = initTodos, action: any) => {
   switch (action.type) {
     case 'addTodo':
-      return [action.newTodo, ...state]
+      return [...todos, action.payload]
     case 'removeTodo':
-      return state.filter((_, index) => index !== action.index)
+      return todos.filter(todo => todo.id !== action.payload)
     case 'toggleTodo':
-      return state.map((todo, index) =>
-        action.index === index
-          ? {text: todo.text, done: !todo.state}
+      return todos.map(todo =>
+        todo.id === action.payload
+          ? {...todo, state: todo.state === 'todo' ? 'done' : 'todo'}
           : todo
       )
     default:
@@ -37,10 +37,10 @@ const todosReducer = (state: TTodo[] = initTodos, action: any) => {
   }
 }
 
-const filterReducer = (state: TFilter = initFilter, action: any) => {
+const filterReducer = (filter: TFilter = initFilter, action: any) => {
   switch (action.type) {
     case 'setFilter':
-      return action.newFilter
+      return action.payload
     default:
       return initFilter
   }
