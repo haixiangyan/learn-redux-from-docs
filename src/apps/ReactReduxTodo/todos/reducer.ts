@@ -1,22 +1,32 @@
-export const initTodos: TTodo[] = []
+import {ADD_TODO, REMOVE_TODO, SET_TODOS, TOGGLE_TODO} from "./actionTypes"
+
+type THandlerMapper = {[key: string]: (loading: TTodo[], action: any) => TTodo[]}
+
+const initTodos: TTodo[] = []
 
 const todosReducer = (todos: TTodo[] = initTodos, action: any) => {
-  switch (action.type) {
-    case 'setTodos':
+  const handlerMapper: THandlerMapper = {
+    [SET_TODOS]: (todos, action) => {
       return [...action.payload]
-    case 'addTodo':
+    },
+    [ADD_TODO]: (todos, action) => {
       return [...todos, action.payload]
-    case 'removeTodo':
+    },
+    [REMOVE_TODO]: (todos, action) => {
       return todos.filter(todo => todo.id !== action.payload)
-    case 'toggleTodo':
+    },
+    [TOGGLE_TODO]: (todos, action) => {
       return todos.map(todo =>
         todo.id === action.payload
           ? {...todo, state: todo.state === 'todo' ? 'done' : 'todo'}
           : todo
       )
-    default:
-      return todos
+    }
   }
+
+  const handler = handlerMapper[action.type]
+
+  return handler ? handler(todos, action) : todos
 }
 
 export default todosReducer

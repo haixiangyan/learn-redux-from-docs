@@ -1,12 +1,19 @@
+import {SET_FILTER} from "./actionTypes"
+
+type THandlerMapper = {[key: string]: (filter: TFilter, action: any) => TFilter}
+
 const initFilter: TFilter = 'all'
 
 const filterReducer = (filter: TFilter = initFilter, action: any) => {
-  switch (action.type) {
-    case 'setFilter':
+  const handlerMapper: THandlerMapper = {
+    [SET_FILTER]: (filter, action) => {
       return action.payload
-    default:
-      return filter
+    }
   }
+
+  const handler = handlerMapper[action.type]
+
+  return handler ? handler(filter, action) : filter
 }
 
 export default filterReducer

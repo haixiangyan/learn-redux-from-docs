@@ -1,15 +1,22 @@
+import {SET_LOADING} from "./actionTypes"
+
+type THandlerMapper = {[key: string]: (loading: TLoading, action: any) => TLoading}
+
 const initLoading: TLoading = {
   status: false,
   tip: ''
 }
 
 const loadingReducer = (loading = initLoading, action: any) => {
-  switch (action.type) {
-    case 'setLoading':
+  const handlerMapper: THandlerMapper = {
+    [SET_LOADING]: (loading, action) => {
       return {...loading, ...action.payload}
-    default:
-      return loading
+    }
   }
+
+  const handler = handlerMapper[action.type]
+
+  return handler ? handler(loading, action) : loading
 }
 
 export default loadingReducer
