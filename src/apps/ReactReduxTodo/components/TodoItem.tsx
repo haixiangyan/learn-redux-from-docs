@@ -13,6 +13,8 @@ interface IProps {
 const TodoItem: FC<IProps> = (props) => {
   const {todo, onToggle, onRemove} = props
 
+  console.log('fuck')
+
   return (
     <List.Item className="todo-item">
       <span className="todo-left">
@@ -28,4 +30,4 @@ const TodoItem: FC<IProps> = (props) => {
   )
 }
 
-export default TodoItem
+export default React.memo(TodoItem)

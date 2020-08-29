@@ -1,5 +1,5 @@
 import * as React from "react"
-import {FC, useEffect, useState} from "react"
+import {FC, useCallback, useEffect, useState} from "react"
 import {Input, List, Radio, Spin} from "antd"
 import {useDispatch, useSelector} from "react-redux"
 import {addTodo, fetchTodos, removeTodo, toggleTodo} from "./store/todos/actionCreators"
@@ -30,13 +30,13 @@ const TodoApp: FC = () => {
     setTask('')
   }
 
-  const onToggleTodo = (id: string) => {
+  const onToggleTodo = useCallback((id: string) => {
     dispatch(toggleTodo(id))
-  }
+  }, [dispatch])
 
-  const onRemoveTodo = (id: string) => {
+  const onRemoveTodo = useCallback((id: string) => {
     dispatch(removeTodo(id))
-  }
+  }, [dispatch])
 
   const onFilter = (filter: TFilter) => {
     dispatch(setFilter(filter))
