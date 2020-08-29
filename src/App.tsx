@@ -14,11 +14,8 @@ function App() {
         <TabPane tab="react-redux" key="1">
           <ReactReduxTodo/>
         </TabPane>
-        <TabPane tab="Tab 2" key="2">
+        <TabPane tab="redux-toolkit" key="2">
           Content of Tab Pane 2
-        </TabPane>
-        <TabPane tab="Tab 3" key="3">
-          Content of Tab Pane 3
         </TabPane>
       </Tabs>
     </ConfigProvider>
