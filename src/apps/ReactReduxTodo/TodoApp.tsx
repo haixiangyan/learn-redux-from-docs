@@ -20,6 +20,9 @@ const TodoApp: FC = () => {
       return state.todos.filter(todo => todo.state === state.filter)
     }
   );
+  const todoNeeded = useSelector<TStore, number>(
+    state => state.todos.filter(todo => todo.state === 'todo').length
+  )
 
   const [task, setTask] = useState<string>('');
 
@@ -44,15 +47,16 @@ const TodoApp: FC = () => {
 
   const footer = (
     <div className="footer">
-      <span className="todo-needed">
-        还剩2项 <span role="img" aria-label="Clap">🎉</span>
-      </span>
+      {todoNeeded > 0 &&
+        <span className="todo-needed">
+          还剩{todoNeeded}项 <span role="img" aria-label="Clap">🎉</span>
+        </span>
+      }
 
       <Radio.Group onChange={e => onFilter(e.target.value)}
                    size="small"
                    defaultValue="all"
-                   buttonStyle="solid"
-      >
+                   buttonStyle="solid">
         <Radio.Button className="filter-item" value="all">全部</Radio.Button>
         <Radio.Button className="filter-item" value="done">已完成</Radio.Button>
         <Radio.Button className="filter-item" value="todo">待完成</Radio.Button>
@@ -77,7 +81,7 @@ const TodoApp: FC = () => {
         bordered
         dataSource={todos}
         renderItem={todo => (
-          <List.Item>
+          <List.Item className="todo-item">
             <span className="todo-left">
               <Checkbox checked={todo.state === 'done'} onChange={() => onCheckTodo(todo.id)}/>
               <span className={classNames('todo-text', {'done': todo.state === 'done'})}>

@@ -7,6 +7,13 @@
     &-list {
       margin-top: 16px;
     }
+    &-item {
+      &:hover {
+        .todo-right {
+          visibility: visible;
+        }
+      }
+    }
     &-left {
       display: inline-flex;
       align-items: center;
@@ -14,6 +21,7 @@
     &-text {
       font-size: 1.2em;
       margin-left: 8px;
+      transition: all .3s;
       &.done {
         text-decoration: line-through;
         color: #bfbfbf;
@@ -24,6 +32,7 @@
       align-items: center;
       cursor: pointer;
       font-size: 1.1em;
+      visibility: hidden;
     }
   }
 
