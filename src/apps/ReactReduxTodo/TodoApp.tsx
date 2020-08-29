@@ -2,10 +2,9 @@ import * as React from "react"
 import {FC, useCallback, useEffect, useState} from "react"
 import {Input, List, Radio, Spin} from "antd"
 import {useDispatch, useSelector} from "react-redux"
-import {addTodo, fetchTodos, removeTodo, toggleTodo} from "./store/todos/actionCreators"
+import {addTodo, fetchTodos, removeTodo, toggleTodo, updateTodo} from './store/todos/actionCreators'
 import {setFilter} from "./store/filter/actionCreators"
 import {selectFilteredTodos, selectTodoNeeded} from "./store/todos/selectors"
-import '../styles.scss'
 import {selectLoading} from "./store/loading/selectors"
 import TodoItem from "./components/TodoItem"
 
@@ -36,6 +35,10 @@ const TodoApp: FC = () => {
 
   const onRemoveTodo = useCallback((id: string) => {
     dispatch(removeTodo(id))
+  }, [dispatch])
+
+  const onUpdateTodo = useCallback(async (id: string, text: string) => {
+    await dispatch(updateTodo(id, text))
   }, [dispatch])
 
   const onFilter = (filter: TFilter) => {
@@ -79,7 +82,7 @@ const TodoApp: FC = () => {
           bordered
           dataSource={todos}
           renderItem={todo => (
-            <TodoItem onRemove={onRemoveTodo} onToggle={onToggleTodo} todo={todo}/>
+            <TodoItem onRemove={onRemoveTodo} onToggle={onToggleTodo} onSave={onUpdateTodo} todo={todo}/>
           )}
         />
       </Spin>

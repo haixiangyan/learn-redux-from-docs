@@ -15,12 +15,16 @@
       }
     }
     &-left {
+      flex-grow: 1;
+      padding-right: 8px;
       display: inline-flex;
       align-items: center;
     }
+    &-check {
+      margin-right: 8px;
+    }
     &-text {
       font-size: 1.2em;
-      margin-left: 8px;
       transition: all .3s;
       &.done {
         text-decoration: line-through;

@@ -3,6 +3,7 @@ import {ConfigProvider, Tabs} from "antd"
 import ReactReduxTodo from "./apps/ReactReduxTodo"
 import zhCN from 'antd/es/locale/zh_CN'
 import 'antd/dist/antd.css'
+import './apps/styles.scss'
 
 const {TabPane} = Tabs
 

@@ -1,7 +1,7 @@
 import {Dispatch} from "redux"
 import fetch from "../../../../api"
 import {setLoading} from "../loading/actionCreators"
-import {ADD_TODO, REMOVE_TODO, SET_TODOS, TOGGLE_TODO} from "./actionTypes"
+import {ADD_TODO, REMOVE_TODO, SET_TODOS, TOGGLE_TODO, UPDATE_TODO} from './actionTypes'
 
 const dbTodos: TTodo[] = [
   {
@@ -54,8 +54,18 @@ export const removeTodo = (id: string) => async (dispatch: Dispatch) => {
   dispatch(setLoading({status: false, tip: ''}))
 }
 
+export const updateTodo = (id: string, text: string) => async (dispatch: Dispatch) => {
+  dispatch(setLoading({status: true, tip: '更新中...'}))
+
+  const response = await fetch('/updateTodo', () => ({ id, text }))
+
+  dispatch({ type: UPDATE_TODO, payload: response })
+
+  dispatch(setLoading({status: false, tip: ''}))
+}
+
 export const toggleTodo = (id: string) => async (dispatch: Dispatch) => {
-  dispatch(setLoading({status: true, tip: '修改状态中...'}))
+  dispatch(setLoading({status: true, tip: '更新状态...'}))
 
   const response = await fetch('/toggleTodo', () => id)
 
