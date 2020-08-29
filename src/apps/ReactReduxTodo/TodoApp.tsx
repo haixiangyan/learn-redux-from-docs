@@ -19,7 +19,7 @@ const TodoApp: FC = () => {
   const footer = (
     <div className="footer">
       <span className="todo-needed">
-        还剩2项 🎉
+        还剩2项 <span role="img" aria-label="Clap">🎉</span>
       </span>
 
       <Radio.Group size="small" defaultValue="all" buttonStyle="solid">

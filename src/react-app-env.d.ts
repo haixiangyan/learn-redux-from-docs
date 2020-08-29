@@ -1,6 +1,7 @@
 /// <reference types="react-scripts" />
 
 type TTodo = {
+  id: string;
   text: string;
   state: TFilter;
 }

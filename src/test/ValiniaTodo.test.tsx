@@ -20,6 +20,7 @@ describe('TodoStore', () => {
   describe('todos', () => {
     it('可以添加一条 Todo', () => {
       const newTodo: TTodo = {
+        id: '99',
         text: '吃好吃的',
         state: 'todo',
       }
@@ -35,6 +36,7 @@ describe('TodoStore', () => {
       store.dispatch({type: 'removeTodo', index})
 
       expect(store.getState().todos[0]).not.toEqual({
+        id: '99',
         text: '抽烟',
         done: true
       })
@@ -62,6 +64,7 @@ describe('TodoStore', () => {
 
       expect(filteredTodo.length).toEqual(1)
       expect(filteredTodo).toEqual([{
+        id: '1',
         text: '抽烟',
         state: 'done'
       }])

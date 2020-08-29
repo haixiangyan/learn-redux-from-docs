@@ -2,14 +2,17 @@ import {combineReducers} from "redux"
 
 const initTodos: TTodo[] = [
   {
+    id: '1',
     text: '抽烟',
     state: 'done'
   },
   {
+    id: '2',
     text: '喝酒',
     state: 'todo'
   },
   {
+    id: '3',
     text: '烫头',
     state: 'todo'
   }
