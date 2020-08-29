@@ -1,4 +1,4 @@
-import store, {TTodo} from '../src/TodoStore'
+import store, {TTodo} from '../apps/ValinaTodo'
 
 describe('TodoStore', () => {
   afterEach(() => {

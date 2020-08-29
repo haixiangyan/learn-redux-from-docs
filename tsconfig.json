@@ -1,33 +1,25 @@
 {
   "compilerOptions": {
-    "target": "es2018",
-    "module": "commonjs",
-    "moduleResolution": "node",
+    "target": "es5",
     "lib": [
-      "esnext",
-      "esnext.asynciterable",
-      "dom"
+      "dom",
+      "dom.iterable",
+      "esnext"
     ],
-    "esModuleInterop": true,
     "allowJs": true,
-    "sourceMap": true,
-    "strict": true,
-    "noEmit": true,
-    "experimentalDecorators": true,
-    "allowSyntheticDefaultImports": true,
-    "baseUrl": ".",
-    // 解决初始化 Nuxt 的报错
     "skipLibCheck": true,
-    "paths": {
-      "~/*": [
-        "./*"
-      ],
-      "@/*": [
-        "./*"
-      ]
-    }
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react"
   },
-  "exclude": [
-    "node_modules"
+  "include": [
+    "src"
   ]
 }
