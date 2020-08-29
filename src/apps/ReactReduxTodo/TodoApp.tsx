@@ -1,14 +1,13 @@
 import * as React from "react"
 import {FC, useEffect, useState} from "react"
-import {Checkbox, Input, List, Radio, Spin} from "antd"
+import {Input, List, Radio, Spin} from "antd"
 import {useDispatch, useSelector} from "react-redux"
-import {CloseOutlined} from "@ant-design/icons/lib"
-import classNames from "classnames"
 import {addTodo, fetchTodos, removeTodo, toggleTodo} from "./store/todos/actionCreators"
 import {setFilter} from "./store/filter/actionCreators"
 import {selectFilteredTodos, selectTodoNeeded} from "./store/todos/selectors"
 import '../styles.scss'
 import {selectLoading} from "./store/loading/selectors"
+import TodoItem from "./components/TodoItem"
 
 const TodoApp: FC = () => {
   const dispatch = useDispatch()
@@ -31,7 +30,7 @@ const TodoApp: FC = () => {
     setTask('')
   }
 
-  const onCheckTodo = (id: string) => {
+  const onToggleTodo = (id: string) => {
     dispatch(toggleTodo(id))
   }
 
@@ -80,17 +79,7 @@ const TodoApp: FC = () => {
           bordered
           dataSource={todos}
           renderItem={todo => (
-            <List.Item className="todo-item">
-              <span className="todo-left">
-                <Checkbox checked={todo.state === 'done'} onChange={() => onCheckTodo(todo.id)}/>
-                <span className={classNames('todo-text', {'done': todo.state === 'done'})}>
-                  {todo.text}
-                </span>
-              </span>
-              <span className="todo-right" onClick={() => onRemoveTodo(todo.id)}>
-                <CloseOutlined/>
-              </span>
-            </List.Item>
+            <TodoItem onRemove={onRemoveTodo} onToggle={onToggleTodo} todo={todo}/>
           )}
         />
       </Spin>
