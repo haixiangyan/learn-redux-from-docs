@@ -1,8 +1,39 @@
 import {Dispatch} from "redux"
 import fetch from "../../api"
 
+const dbTodos: TTodo[] = [
+  {
+    id: '1',
+    text: '抽烟',
+    state: 'done'
+  },
+  {
+    id: '2',
+    text: '喝酒',
+    state: 'todo'
+  },
+  {
+    id: '3',
+    text: '烫头',
+    state: 'todo'
+  }
+]
+
+export const fetchTodos = () => async (dispatch: Dispatch) => {
+  dispatch(setLoading({status: true, tip: '加载中...'}))
+
+  const response: TTodo = await fetch('/addTodo', () => dbTodos)
+
+  dispatch({
+    type: 'setTodos',
+    payload: response
+  })
+
+  dispatch(setLoading({status: false, tip: ''}))
+}
+
 export const addTodo = (newTodo: Partial<TTodo>) => async (dispatch: Dispatch) => {
-  dispatch(setLoading(true))
+  dispatch(setLoading({status: true, tip: '添加中...'}))
 
   const response: TTodo = await fetch('/addTodo', () => ({
     id: new Date().toISOString(),
@@ -14,25 +45,43 @@ export const addTodo = (newTodo: Partial<TTodo>) => async (dispatch: Dispatch) =
     payload: response
   })
 
-  dispatch(setLoading(false))
+  dispatch(setLoading({status: false, tip: ''}))
 }
 
-export const removeTodo = (id: string) => ({
-  type: 'removeTodo',
-  payload: id
-})
+export const removeTodo = (id: string) => async (dispatch: Dispatch) => {
+  dispatch(setLoading({status: true, tip: '移除中...'}))
 
-export const toggleTodo = (id: string) => ({
-  type: 'toggleTodo',
-  payload: id
-})
+  dispatch({
+    type: 'removeTodo',
+    payload: id
+  })
 
-export const setFilter = (filter: TFilter) => ({
-  type: 'setFilter',
-  payload: filter
-})
+  dispatch(setLoading({status: false, tip: ''}))
+}
 
-export const setLoading = (loading: boolean) => ({
+export const toggleTodo = (id: string) => async (dispatch: Dispatch) => {
+  dispatch(setLoading({status: true, tip: '修改状态中...'}))
+
+  dispatch({
+    type: 'toggleTodo',
+    payload: id
+  })
+
+  dispatch(setLoading({status: false, tip: ''}))
+}
+
+export const setFilter = (filter: TFilter) => async (dispatch: Dispatch) => {
+  dispatch(setLoading({status: true, tip: '加载中...'}))
+
+  dispatch({
+    type: 'setFilter',
+    payload: filter
+  })
+
+  dispatch(setLoading({status: false, tip: ''}))
+}
+
+export const setLoading = (loading: TLoading) => ({
   type: 'setLoading',
   payload: loading
 })

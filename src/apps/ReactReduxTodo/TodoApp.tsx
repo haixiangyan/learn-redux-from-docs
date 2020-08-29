@@ -1,12 +1,12 @@
 import * as React from "react"
-import {FC, useState} from "react"
+import {FC, useEffect, useState} from "react"
 import {Checkbox, Input, List, Radio, Spin} from "antd"
 import {useDispatch, useSelector} from "react-redux"
 
 import '../styles.scss'
 import {CloseOutlined} from "@ant-design/icons/lib"
 import classNames from "classnames"
-import {addTodo, removeTodo, setFilter, toggleTodo} from "./actionCreators"
+import {addTodo, fetchTodos, removeTodo, setFilter, toggleTodo} from "./actionCreators"
 
 const TodoApp: FC = () => {
   const dispatch = useDispatch()
@@ -23,9 +23,13 @@ const TodoApp: FC = () => {
   const todoNeeded = useSelector<TStore, number>(
     state => state.todos.filter(todo => todo.state === 'todo').length
   )
-  const loading = useSelector<TStore, boolean>(state => state.loading)
+  const loading = useSelector<TStore, TLoading>(state => state.loading)
 
   const [task, setTask] = useState<string>('');
+
+  useEffect(() => {
+    dispatch(fetchTodos())
+  }, [])
 
   const onAddTodo = () => {
     dispatch(addTodo({
@@ -77,7 +81,7 @@ const TodoApp: FC = () => {
              onPressEnter={onAddTodo}
       />
 
-      <Spin spinning={loading}>
+      <Spin spinning={loading.status} tip={loading.tip}>
         <List
           className="todo-list"
           footer={footer}

@@ -1,29 +1,18 @@
 import {combineReducers} from "redux"
 
-const initTodos: TTodo[] = [
-  {
-    id: '1',
-    text: '抽烟',
-    state: 'done'
-  },
-  {
-    id: '2',
-    text: '喝酒',
-    state: 'todo'
-  },
-  {
-    id: '3',
-    text: '烫头',
-    state: 'todo'
-  }
-]
+export const initTodos: TTodo[] = []
 
-const initLoading: boolean = false
+const initLoading: TLoading = {
+  status: false,
+  tip: ''
+}
 
 const initFilter: TFilter = 'all'
 
 const todosReducer = (todos: TTodo[] = initTodos, action: any) => {
   switch (action.type) {
+    case 'setTodos':
+      return [...action.payload]
     case 'addTodo':
       return [...todos, action.payload]
     case 'removeTodo':
@@ -51,7 +40,7 @@ const filterReducer = (filter: TFilter = initFilter, action: any) => {
 const loadingReducer = (loading = initLoading, action: any) => {
   switch (action.type) {
     case 'setLoading':
-      return action.payload
+      return {...loading, ...action.payload}
     default:
       return loading
   }
