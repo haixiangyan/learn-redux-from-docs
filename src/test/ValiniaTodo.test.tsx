@@ -1,11 +1,23 @@
 import store, {TTodo} from '../apps/ValinaTodo'
 
+jest.spyOn(global.console, 'log')
+
 describe('TodoStore', () => {
   afterEach(() => {
+    jest.clearAllMocks()
     store.dispatch({type: '@@Init'})
   })
 
-  describe('todosReducer', () => {
+  describe('subscribe', () => {
+    it('每次更新 store 会触发 console.log', () => {
+      store.dispatch({type: '@@Init'})
+
+      expect(console.log).toBeCalled()
+      expect(console.log).toBeCalledWith('can you see me')
+    })
+  })
+
+  describe('todos', () => {
     it('可以添加一条 Todo', () => {
       const newTodo: TTodo = {
         text: '吃好吃的',
@@ -39,7 +51,7 @@ describe('TodoStore', () => {
     })
   })
 
-  describe('filterReducer', () => {
+  describe('filter', () => {
     it('可以只选择已完成的 Todo', () => {
       const newFilter = 'done'
 

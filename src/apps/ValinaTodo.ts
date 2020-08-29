@@ -1,4 +1,4 @@
-import {createStore} from 'redux'
+import {combineReducers, createStore} from 'redux'
 
 export type TTodo = {
   text: string;
@@ -6,11 +6,6 @@ export type TTodo = {
 }
 
 type TFilter = 'done' | 'todo' | 'all'
-
-type TStore = {
-  todos: TTodo[],
-  filter: TFilter
-}
 
 const initTodos: TTodo[] = [
   {
@@ -28,11 +23,6 @@ const initTodos: TTodo[] = [
 ]
 
 const initFilter: TFilter = 'all'
-
-const initState: TStore = {
-  todos: initTodos,
-  filter: initFilter
-}
 
 const todosReducer = (state: TTodo[] = initTodos, action: any) => {
   switch (action.type) {
@@ -60,13 +50,13 @@ const filterReducer = (state: TFilter = initFilter, action: any) => {
   }
 }
 
-const reducer = (state = initState, action: any) => {
-  return {
-    todos: todosReducer(state.todos, action),
-    filter: filterReducer(state.filter, action)
-  }
-}
+const reducer = combineReducers({
+  todos: todosReducer,
+  filter: filterReducer
+})
 
 const store = createStore(reducer)
+
+store.subscribe(() => console.log('can you see me'))
 
 export default store
