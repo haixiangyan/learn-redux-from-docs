@@ -2,29 +2,20 @@ import * as React from "react"
 import {FC, useEffect, useState} from "react"
 import {Checkbox, Input, List, Radio, Spin} from "antd"
 import {useDispatch, useSelector} from "react-redux"
-
-import '../styles.scss'
 import {CloseOutlined} from "@ant-design/icons/lib"
 import classNames from "classnames"
 import {addTodo, fetchTodos, removeTodo, toggleTodo} from "./todos/actionCreators"
 import {setFilter} from "./filter/actionCreators"
+import {selectFilteredTodos, selectTodoNeeded} from "./todos/selectors"
+import '../styles.scss'
+import {selectLoading} from "./loading/selectors"
 
 const TodoApp: FC = () => {
   const dispatch = useDispatch()
 
-  const todos = useSelector<TStore, TTodo[]>(
-    state => {
-      if (state.filter === 'all') {
-        return state.todos
-      }
-
-      return state.todos.filter(todo => todo.state === state.filter)
-    }
-  );
-  const todoNeeded = useSelector<TStore, number>(
-    state => state.todos.filter(todo => todo.state === 'todo').length
-  )
-  const loading = useSelector<TStore, TLoading>(state => state.loading)
+  const todos = useSelector<TStore, TTodo[]>(selectFilteredTodos)
+  const todoNeeded = useSelector<TStore, number>(selectTodoNeeded)
+  const loading = useSelector<TStore, TLoading>(selectLoading)
 
   const [task, setTask] = useState<string>('');
 
