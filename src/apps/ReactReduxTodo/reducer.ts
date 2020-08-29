@@ -18,6 +18,8 @@ const initTodos: TTodo[] = [
   }
 ]
 
+const initLoading: boolean = false
+
 const initFilter: TFilter = 'all'
 
 const todosReducer = (todos: TTodo[] = initTodos, action: any) => {
@@ -46,9 +48,19 @@ const filterReducer = (filter: TFilter = initFilter, action: any) => {
   }
 }
 
+const loadingReducer = (loading = initLoading, action: any) => {
+  switch (action.type) {
+    case 'setLoading':
+      return action.payload
+    default:
+      return loading
+  }
+}
+
 const reducer = combineReducers({
   todos: todosReducer,
-  filter: filterReducer
+  filter: filterReducer,
+  loading: loadingReducer
 })
 
 export default reducer

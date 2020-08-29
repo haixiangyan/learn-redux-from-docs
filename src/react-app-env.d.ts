@@ -11,4 +11,5 @@ type TFilter = 'done' | 'todo' | 'all'
 type TStore = {
   todos: TTodo[];
   filter: TFilter;
+  loading: boolean;
 }

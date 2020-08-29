@@ -1,12 +1,12 @@
 import * as React from "react"
 import {FC, useState} from "react"
-import {Checkbox, Input, List, Radio} from "antd"
+import {Checkbox, Input, List, Radio, Spin} from "antd"
 import {useDispatch, useSelector} from "react-redux"
 
 import '../styles.scss'
 import {CloseOutlined} from "@ant-design/icons/lib"
 import classNames from "classnames"
-import {addTodo, removeTodo, setFilter, toggleTodo} from "./actionCrators"
+import {addTodo, removeTodo, setFilter, toggleTodo} from "./actionCreators"
 
 const TodoApp: FC = () => {
   const dispatch = useDispatch()
@@ -23,6 +23,7 @@ const TodoApp: FC = () => {
   const todoNeeded = useSelector<TStore, number>(
     state => state.todos.filter(todo => todo.state === 'todo').length
   )
+  const loading = useSelector<TStore, boolean>(state => state.loading)
 
   const [task, setTask] = useState<string>('');
 
@@ -75,25 +76,27 @@ const TodoApp: FC = () => {
              onPressEnter={onAddTodo}
       />
 
-      <List
-        className="todo-list"
-        footer={footer}
-        bordered
-        dataSource={todos}
-        renderItem={todo => (
-          <List.Item className="todo-item">
+      <Spin spinning={loading}>
+        <List
+          className="todo-list"
+          footer={footer}
+          bordered
+          dataSource={todos}
+          renderItem={todo => (
+            <List.Item className="todo-item">
             <span className="todo-left">
               <Checkbox checked={todo.state === 'done'} onChange={() => onCheckTodo(todo.id)}/>
               <span className={classNames('todo-text', {'done': todo.state === 'done'})}>
                 {todo.text}
               </span>
             </span>
-            <span className="todo-right" onClick={() => onRemoveTodo(todo.id)}>
+              <span className="todo-right" onClick={() => onRemoveTodo(todo.id)}>
               <CloseOutlined/>
             </span>
-          </List.Item>
-        )}
-      />
+            </List.Item>
+          )}
+        />
+      </Spin>
     </div>
   )
 }

@@ -3,7 +3,7 @@ const timeout = (ms: number) => {
 }
 
 async function fetch(url: string, fn: Function) {
-  await timeout(3000);
+  await timeout(1500);
   return fn();
 }
 
