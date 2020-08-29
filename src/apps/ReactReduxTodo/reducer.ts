@@ -1,11 +1,4 @@
-import {combineReducers, createStore} from 'redux'
-
-export type TTodo = {
-  text: string;
-  state: TFilter;
-}
-
-type TFilter = 'done' | 'todo' | 'all'
+import {combineReducers} from "redux"
 
 const initTodos: TTodo[] = [
   {
@@ -55,8 +48,4 @@ const reducer = combineReducers({
   filter: filterReducer
 })
 
-const store = createStore(reducer)
-
-store.subscribe(() => console.log('can you see me'))
-
-export default store
+export default reducer

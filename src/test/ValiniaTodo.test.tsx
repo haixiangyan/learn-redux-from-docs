@@ -1,4 +1,4 @@
-import store, {TTodo} from '../apps/ValinaTodo'
+import store from '../apps/ValinaTodo/index'
 
 jest.spyOn(global.console, 'log')
 
