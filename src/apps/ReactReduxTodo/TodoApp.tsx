@@ -20,7 +20,7 @@ const TodoApp: FC = () => {
 
   useEffect(() => {
     dispatch(fetchTodos())
-  }, [])
+  }, [dispatch])
 
   const onAddTodo = () => {
     dispatch(addTodo({
