@@ -1,20 +1,18 @@
-import {applyMiddleware, combineReducers, createStore} from "redux"
-import ReduxThunk from 'redux-thunk'
-import {composeWithDevTools} from 'redux-devtools-extension'
-import todosReducer from "./todos/reducer"
-import filterReducer from "./filter/reducer"
-import loadingReducer from "./loading/reducer"
+import {combineReducers} from 'redux'
+import filterSlice from './filter/slice'
+import loadingSlice from './loading/slice'
+import todosSlice from './todos/slice'
+import {configureStore} from '@reduxjs/toolkit'
 
 const reducer = combineReducers({
-  todos: todosReducer,
-  filter: filterReducer,
-  loading: loadingReducer
+  todos: todosSlice.reducer,
+  filter: filterSlice.reducer,
+  loading: loadingSlice.reducer
 })
 
-const enhancer = process.env.NODE_ENV === 'development' ? composeWithDevTools(
-  applyMiddleware(ReduxThunk)
-) :applyMiddleware(ReduxThunk)
-
-const store = createStore(reducer, enhancer)
+const store = configureStore({
+  reducer,
+  devTools: true
+})
 
 export default store

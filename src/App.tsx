@@ -11,7 +11,7 @@ const {TabPane} = Tabs
 function App() {
   return (
     <ConfigProvider locale={zhCN}>
-      <Tabs defaultActiveKey="1" centered>
+      <Tabs defaultActiveKey="2" centered>
         <TabPane tab="react-redux" key="1">
           <ReactReduxTodo/>
         </TabPane>

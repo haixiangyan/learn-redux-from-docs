@@ -1,23 +1,23 @@
+import {createSlice} from '@reduxjs/toolkit'
 import {ADD_TODO, REMOVE_TODO, SET_TODOS, TOGGLE_TODO, UPDATE_TODO} from './actionTypes'
-import produce from 'immer'
 import {
   TAddTodoAction,
   TRemoveTodoAction,
   TSetTodosAction,
-  TTodoAction,
   TToggleTodoAction,
   TUpdateTodoAction
 } from './actionCreators'
-
-type THandlerMapper = {[key: string]: (todoState: TTodoStore, action: TTodoAction) => TTodoStore}
+import produce from 'immer'
 
 const initTodos: TTodoStore = {
   ids: [],
   entities: {}
 }
 
-const todosReducer = (todoState: TTodoStore = initTodos, action: any) => {
-  const handlerMapper: THandlerMapper = {
+const todosSlice = createSlice({
+  name: 'todos',
+  initialState: initTodos,
+  reducers: {
     [SET_TODOS]: (todoState, action) => {
       const {payload: todos} = action as TSetTodosAction
 
@@ -65,10 +65,6 @@ const todosReducer = (todoState: TTodoStore = initTodos, action: any) => {
       })
     }
   }
+})
 
-  const handler = handlerMapper[action.type]
-
-  return handler ? handler(todoState, action) : todoState
-}
-
-export default todosReducer
+export default todosSlice

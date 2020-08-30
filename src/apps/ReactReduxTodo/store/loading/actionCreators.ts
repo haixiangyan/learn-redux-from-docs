@@ -1,4 +1,6 @@
+import {SET_LOADING} from './actionTypes'
+
 export const setLoading = (loading: TLoading) => ({
-  type: 'setLoading',
+  type: SET_LOADING,
   payload: loading
 })
