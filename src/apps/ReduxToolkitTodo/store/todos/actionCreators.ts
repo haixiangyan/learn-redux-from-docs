@@ -1,7 +1,9 @@
 import {Dispatch} from "redux"
 import fetch from "../../../../api"
-import {setLoading} from "../loading/actionCreators"
-import {ADD_TODO, REMOVE_TODO, SET_TODOS, TOGGLE_TODO, UPDATE_TODO} from './actionTypes'
+import loadingSlice from '../loading/slice'
+import {ADD_TODO, REMOVE_TODO, FETCH_TODOS, TOGGLE_TODO, UPDATE_TODO} from './actionTypes'
+
+const {setLoading} = loadingSlice.actions
 
 const dbTodos: TTodo[] = [
   {
@@ -22,7 +24,7 @@ const dbTodos: TTodo[] = [
 ]
 
 export type TSetTodosAction = {
-  type: SET_TODOS;
+  type: FETCH_TODOS;
   payload: TTodo[];
 }
 
@@ -56,7 +58,7 @@ export const fetchTodos = () => async (dispatch: Dispatch) => {
 
   const response: TTodo = await fetch('/fetchTodos', () => dbTodos)
 
-  dispatch({ type: SET_TODOS, payload: response })
+  dispatch({ type: FETCH_TODOS, payload: response })
 
   dispatch(setLoading({status: false, tip: ''}))
 }

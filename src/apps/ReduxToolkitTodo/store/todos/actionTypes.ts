@@ -1,5 +1,5 @@
-export const SET_TODOS = 'setTodos'
-export type SET_TODOS = typeof SET_TODOS
+export const FETCH_TODOS = 'fetchTodos'
+export type FETCH_TODOS = typeof FETCH_TODOS
 
 export const ADD_TODO = 'addTodo'
 export type ADD_TODO = typeof ADD_TODO
