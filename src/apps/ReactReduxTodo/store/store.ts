@@ -1,6 +1,6 @@
 import {applyMiddleware, combineReducers, createStore} from "redux"
 import ReduxThunk from 'redux-thunk'
-import {composeWithDevTools} from "redux-devtools-extension/index"
+import {composeWithDevTools} from 'redux-devtools-extension'
 import todosReducer from "./todos/reducer"
 import filterReducer from "./filter/reducer"
 import loadingReducer from "./loading/reducer"
