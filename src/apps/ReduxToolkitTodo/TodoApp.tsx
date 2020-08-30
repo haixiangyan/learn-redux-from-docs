@@ -66,7 +66,7 @@ const TodoApp: FC = () => {
 
   return (
     <div className="app">
-      <h1>react-redux todos</h1>
+      <h1>redux-toolkit todos</h1>
 
       <Input size="large"
              placeholder="今天想干嘛"
