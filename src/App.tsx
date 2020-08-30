@@ -1,6 +1,7 @@
 import React from 'react'
 import {ConfigProvider, Tabs} from "antd"
 import ReactReduxTodo from "./apps/ReactReduxTodo"
+import ReduxToolkitTodo from './apps/ReduxToolkitTodo'
 import zhCN from 'antd/es/locale/zh_CN'
 import 'antd/dist/antd.css'
 import './apps/styles.scss'
@@ -15,7 +16,7 @@ function App() {
           <ReactReduxTodo/>
         </TabPane>
         <TabPane tab="redux-toolkit" key="2">
-          Content of Tab Pane 2
+          <ReduxToolkitTodo/>
         </TabPane>
       </Tabs>
     </ConfigProvider>
