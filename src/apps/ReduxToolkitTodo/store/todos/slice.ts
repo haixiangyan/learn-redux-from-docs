@@ -1,14 +1,17 @@
 import {createSlice} from '@reduxjs/toolkit'
-import {ADD_TODO, REMOVE_TODO, FETCH_TODOS, TOGGLE_TODO, UPDATE_TODO} from './actionTypes'
 import {
+  addTodo,
+  fetchTodos,
+  removeTodo,
   TAddTodoAction,
+  toggleTodo,
   TRemoveTodoAction,
   TSetTodosAction,
   TToggleTodoAction,
-  TUpdateTodoAction
+  TUpdateTodoAction,
+  updateTodo
 } from './actionCreators'
 import produce from 'immer'
-import {fetchTodosThunk} from './thunks'
 
 const initTodos: TTodoStore = {
   ids: [],
@@ -18,34 +21,9 @@ const initTodos: TTodoStore = {
 const todosSlice = createSlice({
   name: 'todos',
   initialState: initTodos,
-  reducers: {
-    [ADD_TODO]: (state, action) => {
-      const {payload: newTodo} = action as TAddTodoAction
-
-      state.ids.push(newTodo.id)
-      state.entities[newTodo.id] = newTodo
-    },
-    [REMOVE_TODO]: (state, action) => {
-      const {payload: targetId} = action as TRemoveTodoAction
-
-      state.ids = state.ids.filter(id => id !== targetId)
-      delete state.entities[targetId]
-    },
-    [UPDATE_TODO]: (state, action) => {
-      const {payload: {id, text}} = action as TUpdateTodoAction
-
-      state.entities[id].text = text
-    },
-    [TOGGLE_TODO]: (state, action) => {
-      const {payload: id} = action as TToggleTodoAction
-
-      const todo = state.entities[id]
-
-      todo.state = todo.state === 'todo' ? 'done' : 'todo'
-    }
-  },
+  reducers: {},
   extraReducers: {
-    [fetchTodosThunk.fulfilled]: (state, action) => {
+    [fetchTodos.fulfilled.toString()]: (state, action) => {
       const {payload: todos} = action as TSetTodosAction
 
       const entities = produce<TTodoEntities>({}, draft => {
@@ -56,10 +34,32 @@ const todosSlice = createSlice({
 
       state.ids = todos.map(t => t.id)
       state.entities = entities
+    },
+    [addTodo.fulfilled.toString()]: (state, action) => {
+      const {payload: newTodo} = action as TAddTodoAction
+
+      state.ids.push(newTodo.id)
+      state.entities[newTodo.id] = newTodo
+    },
+    [removeTodo.fulfilled.toString()]: (state, action) => {
+      const {payload: targetId} = action as TRemoveTodoAction
+
+      state.ids = state.ids.filter(id => id !== targetId)
+      delete state.entities[targetId]
+    },
+    [updateTodo.fulfilled.toString()]: (state, action) => {
+      const {payload: {id, text}} = action as TUpdateTodoAction
+
+      state.entities[id].text = text
+    },
+    [toggleTodo.fulfilled.toString()]: (state, action) => {
+      const {payload: id} = action as TToggleTodoAction
+
+      const todo = state.entities[id]
+
+      todo.state = todo.state === 'todo' ? 'done' : 'todo'
     }
   }
 })
-
-console.log(todosSlice.actions)
 
 export default todosSlice

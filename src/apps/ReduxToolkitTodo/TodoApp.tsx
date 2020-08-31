@@ -37,8 +37,12 @@ const TodoApp: FC = () => {
     dispatch(removeTodo(id))
   }, [dispatch])
 
-  const onUpdateTodo = useCallback(async (id: string, text: string) => {
-    await dispatch(updateTodo(id, text))
+  const onUpdateTodo = useCallback(async (id: string, text: string, state: TFilter) => {
+    await dispatch(updateTodo({
+      id,
+      text,
+      state
+    }))
   }, [dispatch])
 
   const onFilter = (filter: TFilter) => {

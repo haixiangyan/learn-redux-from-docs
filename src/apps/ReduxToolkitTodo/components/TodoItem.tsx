@@ -8,7 +8,7 @@ interface IProps {
   todo: TTodo;
   onToggle: (id: string) => void;
   onRemove: (id: string) => void;
-  onSave: (id: string, text: string) => void;
+  onSave: (id: string, text: string, state: TFilter) => void;
 }
 
 const TodoItem: FC<IProps> = (props) => {
@@ -18,7 +18,7 @@ const TodoItem: FC<IProps> = (props) => {
   const [text, setText] = useState<string>(todo.text)
 
   const onPressEnter = async () => {
-    await onSave(todo.id, text)
+    await onSave(todo.id, text, todo.state)
     setUpdating(false)
   }
 

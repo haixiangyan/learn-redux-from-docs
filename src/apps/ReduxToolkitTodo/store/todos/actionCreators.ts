@@ -1,7 +1,7 @@
-import {Dispatch} from "redux"
 import fetch from "../../../../api"
 import loadingSlice from '../loading/slice'
-import {ADD_TODO, REMOVE_TODO, FETCH_TODOS, TOGGLE_TODO, UPDATE_TODO} from './actionTypes'
+import {ADD_TODO, FETCH_TODOS, REMOVE_TODO, TOGGLE_TODO, UPDATE_TODO} from './actionTypes'
+import {createAsyncThunk} from "@reduxjs/toolkit"
 
 const {setLoading} = loadingSlice.actions
 
@@ -53,55 +53,70 @@ export type TToggleTodoAction = {
 
 export type TTodoAction = TSetTodosAction | TAddTodoAction | TRemoveTodoAction | TUpdateTodoAction | TToggleTodoAction
 
-export const fetchTodos = () => async (dispatch: Dispatch) => {
-  dispatch(setLoading({status: true, tip: '加载中...'}))
+export const fetchTodos = createAsyncThunk<TTodo[]>(
+  'todos/' + FETCH_TODOS,
+  async (_, {dispatch}) => {
+    dispatch(setLoading({status: true, tip: '加载中...'}))
 
-  const response: TTodo = await fetch('/fetchTodos', () => dbTodos)
+    const response: TTodo[] = await fetch('/fetchTodos', () => dbTodos)
 
-  dispatch({ type: FETCH_TODOS, payload: response })
+    dispatch(setLoading({status: false, tip: ''}))
 
-  dispatch(setLoading({status: false, tip: ''}))
-}
+    return response
+  }
+)
 
-export const addTodo = (newTodo: Partial<TTodo>) => async (dispatch: Dispatch) => {
-  dispatch(setLoading({status: true, tip: '添加中...'}))
+export const addTodo = createAsyncThunk<TTodo, Partial<TTodo>>(
+  'todos/' + ADD_TODO,
+  async (newTodo, {dispatch}) => {
+    dispatch(setLoading({status: true, tip: '添加中...'}))
 
-  const response: TTodo = await fetch('/addTodo', () => ({
-    id: new Date().toISOString(),
-    ...newTodo
-  }))
+    const response: TTodo = await fetch('/addTodo', () => ({
+      id: new Date().toISOString(),
+      ...newTodo
+    }))
 
-  dispatch({ type: ADD_TODO, payload: response })
+    dispatch(setLoading({status: false, tip: ''}))
 
-  dispatch(setLoading({status: false, tip: ''}))
-}
+    return response
+  }
+)
 
-export const removeTodo = (id: string) => async (dispatch: Dispatch) => {
-  dispatch(setLoading({status: true, tip: '移除中...'}))
+export const removeTodo = createAsyncThunk<string, string>(
+  'todos/' + REMOVE_TODO,
+  async (id, {dispatch}) => {
+    dispatch(setLoading({status: true, tip: '移除中...'}))
 
-  const response = await fetch('/removeTodo', () => id)
+    const response = await fetch('/removeTodo', () => id)
 
-  dispatch({ type: REMOVE_TODO, payload: response })
+    dispatch(setLoading({status: false, tip: ''}))
 
-  dispatch(setLoading({status: false, tip: ''}))
-}
+    return response
+  }
+)
 
-export const updateTodo = (id: string, text: string) => async (dispatch: Dispatch) => {
-  dispatch(setLoading({status: true, tip: '更新中...'}))
+export const updateTodo = createAsyncThunk<TTodo, TTodo>(
+  'todos/' + UPDATE_TODO,
+  async (newTodo, {dispatch}) => {
+    dispatch(setLoading({status: true, tip: '更新中...'}))
 
-  const response = await fetch('/updateTodo', () => ({ id, text }))
+    const response = await fetch('/updateTodo', () => newTodo)
 
-  dispatch({ type: UPDATE_TODO, payload: response })
+    dispatch(setLoading({status: false, tip: ''}))
 
-  dispatch(setLoading({status: false, tip: ''}))
-}
+    return response
+  }
+)
 
-export const toggleTodo = (id: string) => async (dispatch: Dispatch) => {
-  dispatch(setLoading({status: true, tip: '更新状态...'}))
+export const toggleTodo = createAsyncThunk<string, string>(
+  'todos/' + TOGGLE_TODO,
+  async (id, {dispatch}) => {
+    dispatch(setLoading({status: true, tip: '更新状态...'}))
 
-  const response = await fetch('/toggleTodo', () => id)
+    const response = await fetch('/toggleTodo', () => id)
 
-  dispatch({ type: TOGGLE_TODO, payload: response })
+    dispatch(setLoading({status: false, tip: ''}))
 
-  dispatch(setLoading({status: false, tip: ''}))
-}
+    return response
+  }
+)
