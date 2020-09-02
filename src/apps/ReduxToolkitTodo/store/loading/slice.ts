@@ -1,5 +1,4 @@
 import {createSlice} from '@reduxjs/toolkit'
-import {SET_LOADING} from './actionTypes'
 
 const initLoading: TLoading = {
   status: false,
@@ -10,7 +9,7 @@ const loadingSlice = createSlice({
   name: 'loading',
   initialState: initLoading,
   reducers: {
-    [SET_LOADING]: (state, action) => {
+    setLoading: (state, action) => {
       return {...state, ...action.payload}
     }
   }

@@ -10,7 +10,7 @@ const filterSlice = createSlice({
     [SET_FILTER]: (state, action) => {
       return action.payload
     }
-  }
+  },
 })
 
 export default filterSlice
