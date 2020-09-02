@@ -22,8 +22,8 @@ const todosSlice = createSlice({
   name: 'todos',
   initialState: initTodos,
   reducers: {},
-  extraReducers: {
-    [fetchTodos.fulfilled.toString()]: (state, action) => {
+  extraReducers: builder => {
+    builder.addCase(fetchTodos.fulfilled, (state, action) => {
       const {payload: todos} = action as TSetTodosAction
 
       const entities = produce<TTodoEntities>({}, draft => {
@@ -34,31 +34,34 @@ const todosSlice = createSlice({
 
       state.ids = todos.map(t => t.id)
       state.entities = entities
-    },
-    [addTodo.fulfilled.toString()]: (state, action) => {
+    })
+    builder.addCase(addTodo.fulfilled, (state, action) => {
       const {payload: newTodo} = action as TAddTodoAction
 
       state.ids.push(newTodo.id)
       state.entities[newTodo.id] = newTodo
-    },
-    [removeTodo.fulfilled.toString()]: (state, action) => {
+    })
+
+    builder.addCase(removeTodo.fulfilled, (state, action) => {
       const {payload: targetId} = action as TRemoveTodoAction
 
       state.ids = state.ids.filter(id => id !== targetId)
       delete state.entities[targetId]
-    },
-    [updateTodo.fulfilled.toString()]: (state, action) => {
+    })
+
+    builder.addCase(updateTodo.fulfilled, (state, action) => {
       const {payload: {id, text}} = action as TUpdateTodoAction
 
       state.entities[id].text = text
-    },
-    [toggleTodo.fulfilled.toString()]: (state, action) => {
+    })
+
+    builder.addCase(toggleTodo.fulfilled, (state, action) => {
       const {payload: id} = action as TToggleTodoAction
 
       const todo = state.entities[id]
 
       todo.state = todo.state === 'todo' ? 'done' : 'todo'
-    }
+    })
   }
 })
 
