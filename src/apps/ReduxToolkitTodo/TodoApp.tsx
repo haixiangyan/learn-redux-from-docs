@@ -1,11 +1,11 @@
-import * as React from "react"
-import {FC, useCallback, useEffect, useState} from "react"
-import {Input, List, Radio, Spin} from "antd"
-import {useDispatch, useSelector} from "react-redux"
+import * as React from 'react'
+import {FC, useCallback, useEffect, useState} from 'react'
+import {Input, List, Radio, Spin} from 'antd'
+import {useDispatch, useSelector} from 'react-redux'
 import {addTodo, fetchTodos, removeTodo, toggleTodo, updateTodo} from './store/todos/actionCreators'
-import {selectFilteredTodos, selectTodoNeeded} from "./store/todos/selectors"
-import {selectLoading} from "./store/loading/selectors"
-import TodoItem from "./components/TodoItem"
+import {selectFilteredTodos, selectTodoNeeded} from './store/todos/selectors'
+import {selectLoading} from './store/loading/selectors'
+import TodoItem from './components/TodoItem'
 import filterSlice from './store/filter/slice'
 
 const {setFilter} = filterSlice.actions
@@ -40,11 +40,7 @@ const TodoApp: FC = () => {
   }, [dispatch])
 
   const onUpdateTodo = useCallback(async (id: string, text: string, state: TFilter) => {
-    await dispatch(updateTodo({
-      id,
-      text,
-      state
-    }))
+    await dispatch(updateTodo({ id, changes: { text, state } }))
   }, [dispatch])
 
   const onFilter = (filter: TFilter) => {

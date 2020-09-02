@@ -1,66 +1,47 @@
-import {createSlice} from '@reduxjs/toolkit'
+import {createEntityAdapter, createSlice} from '@reduxjs/toolkit'
 import {
   addTodo,
   fetchTodos,
   removeTodo,
-  TAddTodoAction,
-  toggleTodo,
+  TAddTodoAction, toggleTodo,
   TRemoveTodoAction,
-  TSetTodosAction,
-  TToggleTodoAction,
+  TSetTodosAction, TToggleTodoAction,
   TUpdateTodoAction,
   updateTodo
 } from './actionCreators'
-import produce from 'immer'
 
-const initTodos: TTodoStore = {
-  ids: [],
-  entities: {}
-}
+const todosAdapter = createEntityAdapter<TTodo>({
+  selectId: todo => todo.id,
+  sortComparer: (aTodo, bTodo) => aTodo.id.localeCompare(bTodo.id),
+})
 
 const todosSlice = createSlice({
   name: 'todos',
-  initialState: initTodos,
+  initialState: todosAdapter.getInitialState(),
   reducers: {},
   extraReducers: builder => {
-    builder.addCase(fetchTodos.fulfilled, (state, action) => {
-      const {payload: todos} = action as TSetTodosAction
-
-      const entities = produce<TTodoEntities>({}, draft => {
-        todos.forEach(t => {
-          draft[t.id] = t
-        })
-      })
-
-      state.ids = todos.map(t => t.id)
-      state.entities = entities
-    })
-    builder.addCase(addTodo.fulfilled, (state, action) => {
-      const {payload: newTodo} = action as TAddTodoAction
-
-      state.ids.push(newTodo.id)
-      state.entities[newTodo.id] = newTodo
+    builder.addCase(fetchTodos.fulfilled, (state, action: TSetTodosAction) => {
+      todosAdapter.setAll(state, action.payload);
     })
 
-    builder.addCase(removeTodo.fulfilled, (state, action) => {
-      const {payload: targetId} = action as TRemoveTodoAction
-
-      state.ids = state.ids.filter(id => id !== targetId)
-      delete state.entities[targetId]
+    builder.addCase(addTodo.fulfilled, (state, action: TAddTodoAction) => {
+      todosAdapter.upsertOne(state, action.payload)
     })
 
-    builder.addCase(updateTodo.fulfilled, (state, action) => {
-      const {payload: {id, text}} = action as TUpdateTodoAction
-
-      state.entities[id].text = text
+    builder.addCase(removeTodo.fulfilled, (state, action: TRemoveTodoAction) => {
+      todosAdapter.removeOne(state, action.payload);
     })
 
-    builder.addCase(toggleTodo.fulfilled, (state, action) => {
+    builder.addCase(updateTodo.fulfilled, (state, action: TUpdateTodoAction) => {
+      todosAdapter.updateOne(state, action.payload)
+    })
+
+    builder.addCase(toggleTodo.fulfilled, (state, action: TToggleTodoAction) => {
       const {payload: id} = action as TToggleTodoAction
 
       const todo = state.entities[id]
 
-      todo.state = todo.state === 'todo' ? 'done' : 'todo'
+      todo!.state = todo!.state === 'todo' ? 'done' : 'todo'
     })
   }
 })

@@ -1,7 +1,7 @@
-import fetch from "../../../../api"
+import fetch from '../../../../api'
 import loadingSlice from '../loading/slice'
 import {ADD_TODO, FETCH_TODOS, REMOVE_TODO, TOGGLE_TODO, UPDATE_TODO} from './actionTypes'
-import {createAsyncThunk} from "@reduxjs/toolkit"
+import {createAsyncThunk, Update} from '@reduxjs/toolkit'
 
 const {setLoading} = loadingSlice.actions
 
@@ -24,34 +24,29 @@ const dbTodos: TTodo[] = [
 ]
 
 export type TSetTodosAction = {
-  type: FETCH_TODOS;
+  type: string;
   payload: TTodo[];
 }
 
 export type TAddTodoAction = {
-  type: ADD_TODO;
+  type: string;
   payload: TTodo;
 }
 
 export type TRemoveTodoAction = {
-  type: REMOVE_TODO;
+  type: string;
   payload: string;
 }
 
 export type TUpdateTodoAction = {
-  type: UPDATE_TODO;
-  payload: {
-    id: string;
-    text: string
-  }
+  type: string;
+  payload: Update<TTodo>
 }
 
 export type TToggleTodoAction = {
-  type: TOGGLE_TODO;
+  type: string;
   payload: string;
 }
-
-export type TTodoAction = TSetTodosAction | TAddTodoAction | TRemoveTodoAction | TUpdateTodoAction | TToggleTodoAction
 
 export const fetchTodos = createAsyncThunk<TTodo[]>(
   'todos/' + FETCH_TODOS,
@@ -95,7 +90,7 @@ export const removeTodo = createAsyncThunk<string, string>(
   }
 )
 
-export const updateTodo = createAsyncThunk<TTodo, TTodo>(
+export const updateTodo = createAsyncThunk<Update<TTodo>, Update<TTodo>>(
   'todos/' + UPDATE_TODO,
   async (newTodo, {dispatch}) => {
     dispatch(setLoading({status: true, tip: '更新中...'}))
