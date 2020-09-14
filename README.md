@@ -7,9 +7,9 @@
 
 ## 用到的库
 
-* redux
-* react-redux
-* redux-toolkit
-* redux-thunk
-* redux-devtools-extension
-* immer
+* [redux](https://redux.js.org/)
+* [react-redux](https://react-redux.js.org/)
+* [redux-toolkit](https://redux-toolkit.js.org/)
+* [redux-thunk](https://github.com/reduxjs/redux-thunk)
+* [redux-devtools-extension](https://github.com/zalmoxisus/redux-devtools-extension)
+* [immer](https://immerjs.github.io/immer/docs/introduction)
